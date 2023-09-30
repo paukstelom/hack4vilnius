@@ -106,8 +106,9 @@ export default function MapScreen() {
       <View style={styles.container}>
         <MapView
           style={styles.map}
-          userInterfaceStyle="dark"
+          userInterfaceStyle="light"
           showsUserLocation
+          // provider="google"
           initialRegion={{
             latitude: 54.6872,
             longitude: 25.2797,
@@ -127,6 +128,7 @@ export default function MapScreen() {
           />
           {mission_markers.map((mission: MissionMarker) => (
             <Marker
+              style={styles.marker}
               key={mission.id}
               coordinate={{
                 latitude: mission.coord.lat,
@@ -160,6 +162,7 @@ export default function MapScreen() {
 
           {bike_stands.map((bike_stand: BikeStandMarker) => (
             <Marker
+              style={styles.marker}
               key={bike_stand.id}
               coordinate={{
                 latitude: bike_stand.coord.lat,
@@ -168,7 +171,7 @@ export default function MapScreen() {
             >
               <Image
                 source={bike_stand_image}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 20, height: 20 }}
               />
               <Callout style={{ width: 160 }}>
                 <Text>A bike stand for {bike_stand.capacity} bikes</Text>
@@ -178,6 +181,7 @@ export default function MapScreen() {
           {construction_markers.map(
             (construction_location: ConstructionMarker) => (
               <Marker
+                style={styles.marker}
                 key={construction_location.id}
                 coordinate={{
                   latitude: construction_location.coord.lat,
@@ -203,6 +207,7 @@ export default function MapScreen() {
           bg={"cyan.500"}
           opacity={0.9}
           borderWidth={2}
+          bottom={4}
           borderColor={"cyan.600"}
           style={styles.button}
           startIcon={
@@ -225,7 +230,7 @@ export default function MapScreen() {
           startIcon={
             <Ionicons
               name="ios-camera"
-              size={34}
+              size={50}
               color="white"
               style={styles.buttonIcon}
             />
@@ -238,6 +243,7 @@ export default function MapScreen() {
             bg={"cyan.500"}
             opacity={0.9}
             borderWidth={2}
+            bottom={4}
             style={styles.button}
             borderColor={"cyan.600"}
             startIcon={
@@ -357,7 +363,7 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     position: "absolute",
-    bottom: 20,
+    bottom: 30,
     width: "100%",
     height: 100,
     flexDirection: "row",
@@ -366,6 +372,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   button: {
+    borderBottomWidth: 6,
     shadowColor: "black",
     shadowOffset: {
       width: 0,
@@ -374,5 +381,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4.65,
     elevation: 8,
+  },
+  marker: {
+    // shadowColor: "black",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 4.65,
   },
 });

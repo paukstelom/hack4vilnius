@@ -10,6 +10,9 @@ import { useContext } from "react";
 import { UserContext } from "../utils/userContext";
 
 const bikePhoto = require("../assets/images/bike.png");
+const helmetPhoto = require("../assets/images/helmetpic.png");
+const lockPhoto = require("../assets/images/lock.png");
+const ticketPhoto = require("../assets/images/ticket.png");
 
 export default function StoreScreen() {
   const { userData, refetchUser } = useContext(UserContext);
@@ -21,6 +24,10 @@ export default function StoreScreen() {
   if (!rewardsData) {
     return null;
   }
+
+  rewardsData.sort((a, b) => {
+    return a.points - b.points;
+  });
 
   return (
     <View style={styles.background}>
@@ -48,58 +55,69 @@ export default function StoreScreen() {
           data={rewardsData}
           renderItem={({ item, index }: { item: Reward; index: number }) => (
             <>
-              <View style={styles.rewardCard}>
-                <View
-                  style={{
-                    alignItems: "center",
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-                    {item.detail}
-                  </Text>
-                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                    Price: {item.points}
-                    {item.redeemed ? (
-                      <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                        Already redeemed
-                      </Text>
-                    ) : null}
-                  </Text>
-                </View>
-
-                <View style={styles.buyButton}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      redeemReward(item.id);
-                      refetchRewards();
-                      refetchUser();
+              <View style={styles.cardWrapper}>
+                <View style={styles.rewardCard}>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      backgroundColor: "transparent",
                     }}
                   >
-                    <Text
-                      style={{
-                        color: "black",
-                        fontSize: 20,
-                        fontWeight: "bold",
+                    <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+                      {item.detail}
+                    </Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                      Price: {item.points}
+                    </Text>
+                  </View>
+
+                  <View style={styles.buyButton}>
+                    <TouchableOpacity
+                      disabled={userData.points.value < item.points}
+                      onPress={() => {
+                        redeemReward(item.id);
+                        refetchRewards();
+                        refetchUser();
                       }}
                     >
-                      Redeem
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={{
+                          color: "black",
+                          fontSize: 20,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {item.redeemed
+                          ? "Already redeemed"
+                          : userData.points.value < item.points
+                          ? "Not enough points"
+                          : "Redeem"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={styles.photoWrapper}>
+                  <Image
+                    source={
+                      item.detail === "BIKE"
+                        ? bikePhoto
+                        : item.detail === "HELMET"
+                        ? helmetPhoto
+                        : item.detail === "BIKELOCK"
+                        ? lockPhoto
+                        : ticketPhoto
+                    }
+                    alt={item.detail}
+                    // size={"90%"}
+                    height={"60%"}
+                    width={"80%"}
+                    // position={"absolute"}
+                    // alignSelf={"center"}
+                    // opacity={0.9}
+                    // shadow={3}
+                  />
                 </View>
               </View>
-              <Image
-                source={bikePhoto}
-                alt="bike"
-                alignSelf={"center"}
-                width={"60%"}
-                height={"40%"}
-                bottom={"60%"}
-                left={"21%"}
-                position={"absolute"}
-                opacity={0.9}
-                shadow={3}
-              />
             </>
           )}
           // pagination
@@ -116,7 +134,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "orange",
     height: "100%",
-    width: "100%",
+  },
+  image: {
+    // shadow
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 3.0,
   },
   topContainer: {
     flex: 1,
@@ -124,19 +151,34 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
-
-    height: "35%",
+    height: "30%",
+  },
+  cardWrapper: {
+    backgroundColor: "transparent",
+    alignItems: "center",
+    height: "65%",
+  },
+  photoWrapper: {
+    backgroundColor: "transparent",
+    position: "absolute",
+    // top: "%",
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
   },
   rewardCard: {
-    marginTop: 100,
     marginLeft: 60,
     marginRight: 60,
     borderRadius: 30,
+    gap: 30,
     flexDirection: "column",
     justifyContent: "space-between",
-    height: "60%",
+    width: "70%",
+    height: "80%",
+
     alignItems: "center",
     paddingTop: "30%",
+    marginTop: "30%",
 
     // shadow
     shadowColor: "#000",
@@ -148,16 +190,23 @@ const styles = StyleSheet.create({
     shadowRadius: 16.0,
     backgroundColor: "brown",
     opacity: 0.6,
-    width: "70%",
   },
   buyButton: {
     backgroundColor: "white",
     borderRadius: 20,
-    height: "30%",
     width: "90%",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
+    padding: 10,
+    // small shadow
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 3.0,
   },
 
   bottomContainer: {
@@ -166,7 +215,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "red",
     backgroundColor: "transparent",
-    height: "65%",
-    width: "100%",
+    height: "70%",
   },
 });

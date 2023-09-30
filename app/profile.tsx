@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 6,
     alignItems: "center",
-    right: "4%",
+    right: "2%",
     backgroundColor: "transparent",
   },
   badges: {

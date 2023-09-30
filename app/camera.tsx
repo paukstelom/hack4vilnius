@@ -30,9 +30,23 @@ export default function CameraScreen() {
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} type={CameraType.back}>
+        <TouchableOpacity>
+          <Button
+            size={"sm"}
+            bg={"transparent"}
+            style={styles.backButton}
+            onPress={() => router.push("/")}
+          >
+            <Ionicons
+              name="ios-arrow-back"
+              size={30}
+              color="white"
+              style={styles.buttonIcon}
+            />
+          </Button>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity>
-            {/* icon */}
             <Button
               bg={"transparent"}
               opacity={0.9}
@@ -43,7 +57,7 @@ export default function CameraScreen() {
               startIcon={
                 <Ionicons
                   name="ios-camera"
-                  size={40}
+                  size={30}
                   color="white"
                   style={styles.buttonIcon}
                 />
@@ -70,11 +84,28 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  backButton: {
+    width: 50,
+    // height: 40,
+    borderRadius: 100,
+    opacity: 0.7,
+    top: "10%",
+    left: "10%",
+  },
+  topContainer: {
+    flex: 1,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    margin: 100,
+    justifyContent: "center",
+    // top
+    alignItems: "flex-start",
+  },
   buttonContainer: {
     flex: 1,
     backgroundColor: "transparent",
     flexDirection: "row",
-    margin: 20,
+    margin: 100,
     justifyContent: "center",
     // bottom
     alignItems: "flex-end",
