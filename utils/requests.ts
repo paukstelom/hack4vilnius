@@ -1,6 +1,6 @@
 import { CreateBikeStand, CreateConstruiction, CreateMission } from "./models";
 
-const API_URL = 'http://192.168.101.211:25565';
+const API_URL = 'http://192.168.209.113:25565';
 
 
 export const fetchMarkers = async () => {

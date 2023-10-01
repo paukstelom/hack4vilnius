@@ -48,7 +48,9 @@ export type Reward = {
 
 export type AppUser = {
   name: string;
+  completed_missions: string[];
   points: {
     value : number;
+    all_time: number;
   }
 }

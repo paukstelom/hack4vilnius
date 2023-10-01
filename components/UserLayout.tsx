@@ -19,7 +19,7 @@ export default function UserLayout({
   );
 
   if (!userData) {
-    return null;
+    return <>{children}</>;
   }
 
   return (

@@ -44,10 +44,10 @@ import React from "react";
 import { UserContext } from "../utils/userContext";
 
 const { vilniusRoads }: any = require("../utils/vilniusgeojson.ts");
-const mission_image = require("../assets/images/mission.png");
+const mission_image = require("../assets/images/mission2.png");
 const completed_mission_image = require("../assets/images/completed.png");
 const bike_stand_image = require("../assets/images/bikeStand.png");
-const construction_image = require("../assets/images/construction.png");
+const construction_image = require("../assets/images/construction2.png");
 
 export default function MapScreen() {
   const toast = useToast();
@@ -92,12 +92,25 @@ export default function MapScreen() {
     },
   });
 
-  if (!userData) {
-    return null;
-  }
-
-  if (!markersData) {
-    return null;
+  if (!userData || !markersData) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          // opacity: 0.5,
+          position: "absolute",
+          backgroundColor: "black",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
+          <Spinner size="lg" />
+        </Text>
+      </View>
+    );
   }
 
   //   if (isCreatingMission || isCreatingBikeStand || isCreatingConstruction) {
@@ -202,7 +215,7 @@ export default function MapScreen() {
             >
               <Image
                 source={bike_stand_image}
-                style={{ width: 20, height: 20 }}
+                style={{ width: 25, height: 25 }}
               />
               <Callout style={{ width: 160 }}>
                 <Text>A bike stand for {bike_stand.capacity} bikes</Text>
@@ -221,7 +234,7 @@ export default function MapScreen() {
               >
                 <Image
                   source={construction_image}
-                  style={{ width: 35, height: 35 }}
+                  style={{ width: 40, height: 35 }}
                 />
                 <Callout>
                   <ConstructionCalloutContent
@@ -239,7 +252,7 @@ export default function MapScreen() {
           opacity={0.9}
           borderWidth={2}
           bottom={4}
-          borderColor={"cyan.600"}
+          borderColor={"cyan.700"}
           style={styles.button}
           startIcon={
             <Ionicons
@@ -255,8 +268,8 @@ export default function MapScreen() {
         <Button
           bg={"cyan.500"}
           opacity={0.9}
-          borderWidth={2}
-          borderColor={"cyan.600"}
+          borderWidth={3}
+          borderColor={"cyan.700"}
           style={styles.button}
           startIcon={
             <Ionicons
@@ -276,7 +289,7 @@ export default function MapScreen() {
             borderWidth={2}
             bottom={4}
             style={styles.button}
-            borderColor={"cyan.600"}
+            borderColor={"cyan.700"}
             startIcon={
               <Ionicons
                 name="ios-person"
@@ -421,7 +434,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   button: {
-    borderBottomWidth: 6,
+    borderBottomWidth: 8,
     shadowColor: "black",
     shadowOffset: {
       width: 0,

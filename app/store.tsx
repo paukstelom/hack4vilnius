@@ -42,10 +42,10 @@ export default function StoreScreen() {
         top={"2%"}
       />
       <View style={styles.topContainer}>
-        <Text style={{ fontSize: 24, fontStyle: "italic" }}>
+        <Text style={{ fontSize: 22, fontStyle: "italic" }}>
           Collected points:
         </Text>
-        <Text style={{ fontSize: 24, fontWeight: "bold", fontStyle: "italic" }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>
           {userData.points.value}
         </Text>
       </View>
@@ -107,9 +107,9 @@ export default function StoreScreen() {
                         : ticketPhoto
                     }
                     alt={item.detail}
-                    // size={"90%"}
-                    height={"60%"}
-                    width={"80%"}
+                    size={"70%"}
+                    // height={"100%"}
+                    // width={"70%"}
                     // position={"absolute"}
                     // alignSelf={"center"}
                     // opacity={0.9}
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "30%",
+    gap: 10,
   },
   cardWrapper: {
     backgroundColor: "transparent",

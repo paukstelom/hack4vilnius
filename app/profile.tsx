@@ -1,8 +1,15 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { Avatar, Center, Divider, Stack, View, Text } from "native-base";
+import { useContext } from "react";
+import { UserContext } from "../utils/userContext";
+
+// generate array range 10
+const badges = Array.from(Array(5).keys());
 
 export default function ProfileScreen() {
+  const { userData, refetchUser } = useContext(UserContext);
+
   return (
     <View style={styles.background}>
       <Divider
@@ -37,173 +44,79 @@ export default function ProfileScreen() {
               letterSpacing: -0.015,
             }}
           >
-            John Doe
+            {userData.name}
           </Text>
         </View>
-        {/* <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 24,
-            lineHeight: 32,
-            letterSpacing: -0.015,
-          }}
-        >
-          Total points: 1200
-        </Text> */}
-        {/* <Divider
+        <Divider
           opacity="0.2"
-          bg="orange.700"
+          bg="gray.600"
           rounded="full"
-          my={4}
-          top="2%"
           thickness="3"
           orientation="horizontal"
-          width="100%"
+          width="80%"
           alignSelf="center"
-        /> */}
-        <View style={styles.badges}>
-          {/* <Text
+          top="2%"
+          margin={5}
+        />
+        <View style={styles.statistics}>
+          <Text fontSize={32} style={{ fontSize: 18, fontWeight: "bold" }}>
+            Statistics:
+          </Text>
+          <View
             style={{
-              fontSize: 14,
-              fontWeight: "bold",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              gap: 0,
+              marginTop: "3%",
             }}
           >
-            Badges:
-          </Text> */}
-          {/* for range in 3 */}
+            <Text fontSize={23} style={{ fontSize: 18, fontStyle: "italic" }}>
+              Total points earned: {userData.points.value}
+            </Text>
+            <Text fontSize={23} style={{ fontSize: 18, fontStyle: "italic" }}>
+              Total missions completed: {userData.completed_missions.length}
+            </Text>
+          </View>
+        </View>
+        <Divider
+          opacity="0.2"
+          bg="gray.600"
+          rounded="full"
+          thickness="3"
+          orientation="horizontal"
+          width="80%"
+          alignSelf="center"
+          // top="2%"
+          margin={5}
+        />
 
-          {/* <Stack
-            direction="row"
-            mt="6"
-            space={4}
+        <View style={styles.badges}>
+          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Badges:</Text>
+          <View
             style={{
-              justifyContent: "space-between",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+              gap: 10,
+              marginTop: "10%",
+              // only 4 in row
+              flexWrap: "wrap",
             }}
           >
-            <Center
-              size="16"
-              bg="primary.500"
-              rounded="2xl"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Award
-            </Center>
-            <Center
-              bg="success.500"
-              size="16"
-              rounded="sm"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Badge
-            </Center>
-            <Center
-              size="16"
-              bg="primary.700"
-              rounded="sm"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Box 3
-            </Center>
-          </Stack>
-          <Stack
-            direction="row"
-            mt="4"
-            space={4}
-            style={{
-              justifyContent: "space-between",
-            }}
-          >
-            <Center
-              size="16"
-              bg="danger.400"
-              rounded="md"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Prize
-            </Center>
-            <Center
-              bg="primary.500"
-              size="16"
-              rounded="xl"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Box 2
-            </Center>
-            <Center
-              size="16"
-              bg="primary.200"
-              rounded="full"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Box 3
-            </Center>
-          </Stack>
-          <Stack
-            direction="row"
-            mt="4"
-            space={4}
-            style={{
-              justifyContent: "space-between",
-            }}
-          >
-            <Center
-              size="16"
-              bg="primary.800"
-              rounded="full"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Box 1
-            </Center>
-            <Center
-              bg="primary.500"
-              size="16"
-              rounded="lg"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-              shadow={"3"}
-            >
-              Box 2
-            </Center>
-            <Center
-              size="16"
-              bg="transparent"
-              rounded="md"
-              _text={{
-                color: "warmGray.50",
-                fontWeight: "medium",
-              }}
-            ></Center>
-          </Stack> */}
+            {badges.map((badge) => (
+              <Avatar
+                key={badge}
+                bg="purple.600"
+                size="lg"
+                source={{
+                  // random
+                  uri: `https://picsum.photos/seed/${badge + 10}/200/300`,
+                }}
+                style={styles.badgeIcon}
+              />
+            ))}
+          </View>
         </View>
       </View>
       <Avatar
@@ -227,6 +140,27 @@ const styles = StyleSheet.create({
     // add inside shadow
 
     // backgroundColor: "transparent",
+  },
+  statistics: {
+    // backgroundColor: "red",
+    width: "100%",
+    height: "20%",
+  },
+  badgeIcon: {
+    // add shadow
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 5.0,
+  },
+  badges: {
+    marginTop: "5%",
+    // backgroundColor: "blue",
+    width: "100%",
+    height: "30%",
   },
   content: {
     backgroundColor: "white",
@@ -254,12 +188,7 @@ const styles = StyleSheet.create({
     right: "2%",
     backgroundColor: "transparent",
   },
-  badges: {
-    marginTop: "5%",
-    backgroundColor: "white",
-    opacity: 0.7,
-    width: "90%",
-  },
+
   avatar: {
     alignSelf: "center",
     position: "absolute",

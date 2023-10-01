@@ -63,11 +63,9 @@ function RootLayoutNav() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <UserLayout>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <NativeBaseProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <NativeBaseProvider>
+          <UserLayout>
             <Stack initialRouteName="index">
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="camera" options={{ headerShown: false }} />
@@ -84,9 +82,9 @@ function RootLayoutNav() {
                 options={{ presentation: "modal", headerShown: false }}
               />
             </Stack>
-          </NativeBaseProvider>
-        </ThemeProvider>
-      </UserLayout>
+          </UserLayout>
+        </NativeBaseProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    borderBottomWidth: 4,
     shadowColor: "black",
     shadowOffset: {
       width: 0,
