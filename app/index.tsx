@@ -1,5 +1,4 @@
 import { StyleSheet, Image, Text } from "react-native";
-import { View } from "../components/Themed";
 import MapView, {
   Callout,
   Geojson,
@@ -16,6 +15,7 @@ import {
   Input,
   Popover,
   Spinner,
+  View,
   useToast,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
