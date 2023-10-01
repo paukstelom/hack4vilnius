@@ -1,7 +1,6 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { Text, View } from "../components/Themed";
-import { Avatar, Center, Divider, Stack } from "native-base";
+import { Avatar, Center, Divider, Stack, View, Text } from "native-base";
 
 export default function ProfileScreen() {
   return (

@@ -1,8 +1,7 @@
 import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import { Carousel } from "react-native-basic-carousel";
 
-import { Text, View } from "../components/Themed";
-import { Center, Divider, HStack, Image } from "native-base";
+import { Center, Divider, HStack, Image, View, Text } from "native-base";
 import { Reward } from "../utils/models";
 import { useQuery } from "@tanstack/react-query";
 import { fetchRewards, redeemReward } from "../utils/requests";

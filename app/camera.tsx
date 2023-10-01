@@ -1,8 +1,7 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { Text, View } from "../components/Themed";
 import { CameraType, Camera } from "expo-camera";
-import { Button } from "native-base";
+import { Button, View, Text } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
@@ -12,7 +11,7 @@ export default function CameraScreen() {
   if (!permission) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Loading...</Text>
+        <Text>Loading...</Text>
       </View>
     );
   }
@@ -21,7 +20,7 @@ export default function CameraScreen() {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={requestPermission}>
-          <Text style={styles.text}>Request permission</Text>
+          <Text>Request permission</Text>
         </TouchableOpacity>
       </View>
     );
