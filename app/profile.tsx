@@ -4,6 +4,8 @@ import { Avatar, Center, Divider, Stack, View, Text } from "native-base";
 import { useContext } from "react";
 import { UserContext } from "../utils/userContext";
 
+import { MAINCOLORS } from "../constants/Colors";
+
 // generate array range 10
 const badges = Array.from(Array(5).keys());
 
@@ -13,8 +15,8 @@ export default function ProfileScreen() {
   return (
     <View style={styles.background}>
       <Divider
-        opacity="0.2"
-        bg="gray.600"
+        opacity="0.1"
+        bg="white"
         rounded="full"
         top="2%"
         thickness="7"
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     width: "100%",
-    backgroundColor: "orange",
+    backgroundColor: MAINCOLORS.darkmode,
     // add inside shadow
 
     // backgroundColor: "transparent",

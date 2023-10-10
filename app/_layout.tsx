@@ -2,9 +2,10 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
   DefaultTheme,
+  NavigationContainer,
   ThemeProvider,
 } from "@react-navigation/native";
-import { NativeBaseProvider, Box } from "native-base";
+import { NativeBaseProvider, Box, Drawer } from "native-base";
 
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
@@ -19,6 +20,10 @@ import { fetchUser } from "../utils/requests";
 import { AppUser } from "../utils/models";
 import { UserContext } from "../utils/userContext";
 import UserLayout from "../components/UserLayout";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import MapScreen from ".";
+import ProfileScreen from "./profile";
+import StoreScreen from "./store";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -60,6 +65,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const queryClient = new QueryClient();
+  const Drawer = createDrawerNavigator();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -68,9 +74,22 @@ function RootLayoutNav() {
           <UserLayout>
             <Stack initialRouteName="index">
               <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="camera" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="camera"
+                options={{
+                  headerShown: false,
+                  presentation: "modal",
+                }}
+              />
               <Stack.Screen
                 name="profile"
+                options={{
+                  presentation: "modal",
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="photo"
                 options={{
                   presentation: "modal",
                   headerShown: false,

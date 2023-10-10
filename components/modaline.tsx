@@ -1,23 +1,25 @@
-import { Callout, LatLng } from "react-native-maps";
+import { Callout } from "react-native-maps";
 import { Button, Icon, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { Cords, MissionMarker } from "../utils/models";
-import { updateMission } from "../utils/requests";
+import {
+  BikeStandMarker,
+  ConstructionMarker,
+  Cords,
+  ModalineMarker,
+} from "../utils/models";
 import { calculateDistance } from "../utils/distance";
 import { MAINCOLORS } from "../constants/Colors";
 
-export default function MissionCalloutContent({
-  mission,
-  refetch,
+export default function ModalineCalloutContent({
+  bike_stand,
   currentLocation,
 }: {
-  mission: MissionMarker;
-  refetch: any;
+  bike_stand: ModalineMarker;
   currentLocation: Cords;
 }) {
-  const distance = calculateDistance(currentLocation, mission.coord);
+  const distance = calculateDistance(currentLocation, bike_stand.coord);
 
   return (
     <View style={styles.base}>
@@ -29,9 +31,11 @@ export default function MissionCalloutContent({
 
             // fontStyle={"italic"}
           >
-            Mission
+            Modular bike stand
           </Text>
-          <Text color={"white"}>Reward: {mission.points} points</Text>
+          <Text color={"white"}>
+            Capacity: {bike_stand.capacity - bike_stand.occupied}
+          </Text>
         </View>
         <View
           style={{
@@ -70,76 +74,6 @@ export default function MissionCalloutContent({
           </Text>
         </View>
       </View>
-      <View
-        style={{
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-          gap: 10,
-        }}
-      >
-        <Text color={"white"}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor
-          semper nisl, tincidunt nunc.
-        </Text>
-
-        {/* <Text color={"white"}>* Bullpoint4</Text> */}
-      </View>
-
-      <View
-        style={{
-          width: "100%",
-
-          justifyContent: "flex-start",
-
-          gap: 10,
-        }}
-      >
-        <Button
-          // disabled
-          // opacity={0.9}
-          // borderWidth={1}
-          style={{
-            backgroundColor: MAINCOLORS.darkblue,
-            flexDirection: "row",
-            alignItems: "center",
-            alignContent: "center",
-            borderRadius: 10,
-
-            paddingRight: 20,
-            paddingLeft: 20,
-            // height: "20%",
-
-            // width: "60%",
-
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 3,
-            },
-            shadowOpacity: 0.58,
-            shadowRadius: 3.0,
-          }}
-          startIcon={<Ionicons name="ios-camera" size={22} color="white" />}
-          borderRadius={"md"}
-          onPress={() => {
-            router.push("/camera");
-            refetch();
-            updateMission(mission.id);
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              // fontWeight: "bold",
-              paddingLeft: 5,
-              color: "white",
-            }}
-          >
-            Capture the location
-          </Text>
-        </Button>
-      </View>
     </View>
   );
 }
@@ -152,7 +86,7 @@ const styles = StyleSheet.create({
     // paddingLeft: 3,
     // paddingRight: 3,
     flex: 1,
-    width: 250,
+    width: 270,
     backgroundColor: MAINCOLORS.otherblue,
     borderRadius: 10,
     // shadow
@@ -166,6 +100,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 8,
   },
+
   topContent: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -173,9 +108,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  buttonIcon: {},
+  buttonIcon: {
+    // shadowColor: "black",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 4.65,
+    // elevation: 8,
+  },
 
-  shadow: {
+  button: {
     shadowColor: "black",
     shadowOffset: {
       width: 0,

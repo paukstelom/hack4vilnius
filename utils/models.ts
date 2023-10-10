@@ -9,6 +9,7 @@ export type MarkerType = {
   type: string;
   coord: Cords;
 }
+
 export interface BikeStandMarker extends MarkerType {
   capacity: number;
 }
@@ -17,6 +18,25 @@ export interface MissionMarker extends MarkerType {
   description: string;
   completed: boolean;
   points: number;
+}
+
+export interface ConstructionMarker extends MarkerType {
+  description: string;
+  completion_date: string;
+}
+
+export interface WaterMarker extends MarkerType {
+  description: string;
+}
+
+export interface AirPressureMarker extends MarkerType {
+  description: string;
+}
+
+export interface ModalineMarker extends MarkerType {
+  description: string;
+  capacity: number;
+  occupied: number;
 }
 
 export type CreateMission = {
@@ -34,10 +54,7 @@ export type CreateBikeStand = {
   capacity: number;
 }
 
-export interface ConstructionMarker extends MarkerType {
-  description: string;
-  completion_date: string;
-}
+
 
 export type Reward = {
   id: string;

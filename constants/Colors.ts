@@ -17,3 +17,14 @@ export default {
     tabIconSelected: tintColorDark,
   },
 };
+
+
+export const MAINCOLORS = {
+  darkblue: "#232851",
+  blue: "#395aa5",
+  otherblue: "#3b9ecc",
+  yellow: "#ef8c1d",
+  green: "#90be29",
+  darkmode: "#223142"
+
+}

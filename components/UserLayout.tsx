@@ -7,12 +7,14 @@ import { AppUser, ConstructionMarker } from "../utils/models";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUser } from "../utils/requests";
 import { UserContext } from "../utils/userContext";
+import { useState } from "react";
 
 export default function UserLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [problemImage, setProblemImage] = useState<string>("");
   const { data: userData, refetch: refetchUser } = useQuery<AppUser, Error>(
     ["user"],
     fetchUser
@@ -23,7 +25,14 @@ export default function UserLayout({
   }
 
   return (
-    <UserContext.Provider value={{ userData, refetchUser }}>
+    <UserContext.Provider
+      value={{
+        userData,
+        refetchUser,
+        problemImage,
+        setProblemImage,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

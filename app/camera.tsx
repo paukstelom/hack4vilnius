@@ -1,12 +1,31 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { CameraType, Camera } from "expo-camera";
-import { Button, View, Text } from "native-base";
+import { Button, View, Text, Image, useToast, Box, Divider } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState, useRef, useContext } from "react";
+import { MAINCOLORS } from "../constants/Colors";
+
+import { UserContext } from "../utils/userContext";
 
 export default function CameraScreen() {
+  const { userData, refetchUser, problemImage, setProblemImage } =
+    useContext(UserContext);
+
   const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  const cameraRef = useRef<Camera>(null);
+  const takePhoto = async () => {
+    const camera = cameraRef.current;
+    if (!camera) return;
+    try {
+      const data: any = await camera.takePictureAsync();
+      setProblemImage(data.uri);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
 
   if (!permission) {
     return (
@@ -28,44 +47,118 @@ export default function CameraScreen() {
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={CameraType.back}>
-        <TouchableOpacity>
-          <Button
-            size={"sm"}
-            bg={"transparent"}
-            style={styles.backButton}
-            onPress={() => router.push("/")}
+      <Camera
+        ref={cameraRef}
+        style={styles.camera}
+        // take picture and save it
+        // onPictureSaved={onPictureSaved}
+
+        type={CameraType.back}
+      >
+        <View
+          style={{
+            width: "5%",
+            height: "100%",
+            ...styles.overlayer,
+          }}
+        ></View>
+        <View
+          style={{
+            width: "90%",
+            height: "100%",
+          }}
+        >
+          <View
+            style={{
+              height: "15%",
+              width: "100%",
+
+              alignItems: "center",
+              ...styles.overlayer,
+            }}
           >
-            <Ionicons
-              name="ios-arrow-back"
-              size={30}
-              color="white"
-              style={styles.buttonIcon}
+            <Divider
+              opacity="0.2"
+              bg="white"
+              rounded="full"
+              height={2}
+              position={"absolute"}
+              top="10%"
+              // thickness={20}
+              orientation="horizontal"
+              width="50%"
+              alignSelf="center"
             />
-          </Button>
-        </TouchableOpacity>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity>
+            <Text
+              style={{
+                paddingTop: "20%",
+                ...styles.text,
+              }}
+            >
+              Capture the area
+            </Text>
+          </View>
+          <View shadow={10} style={styles.topContainer}></View>
+          <View
+            style={{
+              height: "25%",
+              width: "100%",
+              ...styles.overlayer,
+            }}
+          ></View>
+          <View
+            // paddingX={"8%"}
+            bottom={"1%"}
+            position="absolute"
+            // alignSelf="center"
+
+            alignItems={"center"}
+            // alignContent={"center"}
+            // justifyContent="center"
+            style={{
+              height: "25%",
+              width: "100%",
+              flexDirection: "column",
+              // justifyContent: "space-between",
+              paddingTop: "8%",
+              gap: 10,
+            }}
+          >
             <Button
-              bg={"transparent"}
-              opacity={0.9}
-              borderWidth={4}
+              // size={"lg"}
               style={styles.button}
-              borderColor={"cyan.600"}
-              size={"sm"}
+              bg={MAINCOLORS.otherblue}
+              paddingLeft={6}
+              paddingRight={6}
               startIcon={
                 <Ionicons
                   name="ios-camera"
-                  size={30}
+                  size={32}
                   color="white"
-                  style={styles.buttonIcon}
+
+                  // style={styles.buttonIcon}
                 />
               }
-              borderRadius="full"
-              onPress={() => router.push("/")}
-            />
-          </TouchableOpacity>
+              onPress={() => (takePhoto(), router.push("/photo"))}
+            >
+              <Text
+                style={{
+                  paddingTop: 5,
+                  ...styles.text,
+                }}
+              >
+                Capture
+              </Text>
+            </Button>
+          </View>
         </View>
+        <View
+          style={{
+            width: "5%",
+            height: "100%",
+            ...styles.overlayer,
+          }}
+        ></View>
       </Camera>
     </View>
   );
@@ -73,61 +166,64 @@ export default function CameraScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
     height: "100%",
     width: "100%",
   },
+  overlayer: {
+    backgroundColor: MAINCOLORS.darkmode,
+    opacity: 0.9,
+  },
+
   camera: {
     flex: 1,
+    flexDirection: "row",
     height: "100%",
     width: "100%",
   },
-  backButton: {
-    width: 50,
-    // height: 40,
-    borderRadius: 100,
-    opacity: 0.7,
-    top: "10%",
-    left: "10%",
-  },
+
   topContainer: {
-    flex: 1,
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    margin: 100,
-    justifyContent: "center",
-    // top
-    alignItems: "flex-start",
-  },
-  buttonContainer: {
-    flex: 1,
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    margin: 100,
-    justifyContent: "center",
-    // bottom
-    alignItems: "flex-end",
-  },
-  button: {
-    width: 70,
-    height: 70,
-    borderRadius: 50,
-    opacity: 0.7,
-  },
-  buttonIcon: {
+    // borderWidth: 1,
+    // borderRadius: 10,
+    borderColor: "white",
+    // dashed
+
+    // long dashes
+    borderStyle: "dashed",
+    // backgroundColor: "red",
+    width: "100%",
+    height: "60%",
+    opacity: 0.2,
+
+    // fill shadow 200px
     shadowColor: "black",
+    // add shadow
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 0,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 4.65,
-    elevation: 8,
+    shadowOpacity: 1,
+    shadowRadius: 5.0,
+    overflow: "visible",
+
+    // overflow: "visible",
   },
+
+  button: {
+    borderRadius: 10,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+  },
+
   text: {
     fontSize: 24,
-    fontWeight: "bold",
+
     color: "white",
+    paddingLeft: 5,
   },
 });
