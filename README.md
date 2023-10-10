@@ -4,7 +4,7 @@ A prototype app made for a Hack4Vilnius2023 hackaton. The app is focused on coll
 
 Built using React Native.
 
-<img src="assets/images/demo3.jpeg" width="400">
-<img src="assets/images/demo5.jpeg" width="400">
-<img src="assets/images/demo1.jpeg" width="400">
-<img src="assets/images/demo2.jpeg" width="400">
+<img src="assets/images/demo3.jpeg" width="350">
+<img src="assets/images/demo5.jpeg" width="350">
+<img src="assets/images/demo1.jpeg" width="350">
+<img src="assets/images/demo2.jpeg" width="350">
